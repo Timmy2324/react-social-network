@@ -4,10 +4,13 @@ import {Post} from "./Post/Post";
 
 export function MyPosts() {
     return (
-        <div>
-            my posts
+        <div className={classes.posts_block}>
+            <h3>My posts</h3>
             <div>
-                <textarea></textarea>
+                <div>
+                    <textarea></textarea>
+                </div>
+
                 <button>Add post</button>
             </div>
             <div className={classes.posts}>
