@@ -10,7 +10,7 @@ export function ProfileInfo(props: ProfileInfoPropsType) {
     return (
         <div>
             <div>
-                <img src={mainScreen} alt=""/>
+                <img className={classes.mainScreen} src={mainScreen} alt=""/>
             </div>
             <div className={classes.description_block}>
                 ava + description
