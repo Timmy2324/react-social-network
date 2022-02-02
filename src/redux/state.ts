@@ -1,3 +1,5 @@
+import {AddPostActionType, ProfileReducer, UpdateNewPostTextActionType} from "./profile-reducer";
+import {AddMessagesActionType, DialogsReducer, UpdateNewDialogsMessagesActionType} from "./dialogs-reducer";
 
 export type PostType = {
     id: number,
@@ -40,40 +42,10 @@ export type StoreType = {
     updateNewDialogsMessages: (text: string) => void
     subscribe: (observer: () => void)  => void
     getState: () => StateType
-    dispatch: (action: actionType) => void
+    dispatch: (action: GeneralActionType) => void
 }
 
-export type actionType = AddPostActionType | UpdateNewPostTextActionType | AddMessagesActionType | UpdateNewDialogsMessagesActionType;
-
-type AddPostActionType = ReturnType<typeof addPostAC>
-export const addPostAC = () => {
-    return {
-        type: 'ADD-POST'
-    } as const
-}
-
-type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
-export const updateNewPostTextAC = (text: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        text
-    } as const
-}
-
-type AddMessagesActionType = ReturnType<typeof addMessagesAC>
-export const addMessagesAC = () => {
-    return {
-        type: 'ADD-MESSAGES'
-    } as const
-}
-
-type UpdateNewDialogsMessagesActionType = ReturnType<typeof updateNewDialogsMessagesAC>
-export const updateNewDialogsMessagesAC = (text: string) => {
-    return {
-        type: 'UPDATE-NEW-DIALOG-TEXT',
-        text
-    } as const
-}
+export type GeneralActionType = AddPostActionType | UpdateNewPostTextActionType | AddMessagesActionType | UpdateNewDialogsMessagesActionType;
 
 export let store: StoreType = {
     _state: {
@@ -137,30 +109,8 @@ export let store: StoreType = {
         return this._state;
     },
     dispatch(action) {
-        if(action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.text;
-            this._onChange();
-        } else if(action.type === 'ADD-POST') {
-            const newPost: PostType = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0,
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';
-            this._onChange();
-        } else if(action.type === 'ADD-MESSAGES') {
-            const newMessagesText: MessagesType = {
-                id: 4,
-                message: this._state.dialogsPage.newMessage,
-            }
-
-            this._state.dialogsPage.messages.push(newMessagesText);
-            this._state.dialogsPage.newMessage = '';
-            this._onChange();
-        } else if(action.type === 'UPDATE-NEW-DIALOG-TEXT') {
-            this._state.dialogsPage.newMessage = action.text;
-            this._onChange();
-        }
+        this._state.profilePage = ProfileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action);
+        this._onChange();
     }
 }

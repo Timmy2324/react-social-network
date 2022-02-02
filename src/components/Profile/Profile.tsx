@@ -3,11 +3,11 @@ import React from "react";
 import classes from "./Profile.module.css";
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {actionType, ProfilePageType} from "../../redux/state";
+import {GeneralActionType, ProfilePageType} from "../../redux/state";
 
 type ProfilePropsType = {
     state: ProfilePageType
-    dispatch: (action: actionType) => void
+    dispatch: (action: GeneralActionType) => void
 }
 
 export function Profile(props: ProfilePropsType) {
