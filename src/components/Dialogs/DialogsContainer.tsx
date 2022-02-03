@@ -1,30 +1,38 @@
 import React from "react";
 import {addMessagesAC, updateNewDialogsMessagesAC} from "../../redux/dialogs-reducer";
 import {Dialogs} from "./Dialogs";
-import {ReduxStoreType} from "../../redux/redux-store";
+import {StoreContext} from "../../StoreContext";
 
 
-
-type DialogsPropsType = {
-    store: ReduxStoreType
-}
+type DialogsPropsType = {}
 
 export function DialogsContainer(props: DialogsPropsType) {
 
-    const addMessage = () => {
-        props.store.dispatch(addMessagesAC());
-    }
 
-    const newMessageChange = (text: string) => {
-        props.store.dispatch(updateNewDialogsMessagesAC(text));
-    }
 
     return (
-        <Dialogs
-            addMessage={addMessage}
-            newMessageChange={(text: string) => newMessageChange(text)}
-            state={props.store.getState().DialogsReducer}
-            newMessage={props.store.getState().DialogsReducer.newMessage}
-        />
-    );
+        <StoreContext.Consumer>{
+            (store) => {
+
+                const addMessage = () => {
+                    store.dispatch(addMessagesAC());
+                }
+
+                const newMessageChange = (text: string) => {
+                    store.dispatch(updateNewDialogsMessagesAC(text));
+                }
+
+                return (
+                    <Dialogs
+                        addMessage={addMessage}
+                        newMessageChange={(text: string) => newMessageChange(text)}
+                        state={store.getState().DialogsReducer}
+                        newMessage={store.getState().DialogsReducer.newMessage}
+                    />
+                )
+            }
+        }
+        </StoreContext.Consumer>
+
+    )
 }

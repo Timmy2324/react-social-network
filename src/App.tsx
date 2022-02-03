@@ -7,11 +7,9 @@ import {Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
-import {ReduxStoreType} from "./redux/redux-store";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
-    store: ReduxStoreType,
     dispatch: (action: any) => void
 }
 
@@ -24,14 +22,10 @@ function App(props: AppPropsType) {
             <div className="app-wrapper-content">
                 <Routes>
                     <Route path="/profile" element={
-                        <Profile
-                            store={props.store}
-                        />}
+                        <Profile/>}
                     />
                     <Route path="/dialogs/*" element={
-                        <DialogsContainer
-                            store={props.store}
-                        />}
+                        <DialogsContainer/>}
                     />
                     <Route path="/news" element={<News/>}/>
                     <Route path="/music" element={<Music/>}/>
