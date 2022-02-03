@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import classes from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem'
 import {Message} from "./Message/Message";
-import {DialogsPageType} from "../../redux/state";
+import {DialogsPageType} from "../../redux/store";
 import {addMessagesAC, updateNewDialogsMessagesAC} from "../../redux/dialogs-reducer";
 
 
@@ -15,13 +15,14 @@ type DialogsPropsType = {
 export function Dialogs(props: DialogsPropsType) {
 
     const addMessage = () => {
+        console.log(props.state.newMessage)
         if(props.state.newMessage !== '') {
             props.dispatch(addMessagesAC());
         }
     };
 
     const newMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        if(e.currentTarget && e.currentTarget.value !== '') {
+        if(e.currentTarget) {
             props.dispatch(updateNewDialogsMessagesAC(e.currentTarget.value))
         }
     }

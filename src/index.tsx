@@ -3,16 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
-import {store} from "./redux/state";
+import {ReduxStoreType, Store} from "./redux/redux-store";
 
-export const rerenderEntireTree = () => {
+export const rerenderEntireTree = (store: ReduxStoreType) => {
 
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
                 <App
-                    state={store.getState()}
-                    dispatch={store.dispatch.bind(store)}
+                    store={store}
+                    dispatch={Store.dispatch.bind(store)}
                 />
             </BrowserRouter>
         </React.StrictMode>,
@@ -20,6 +20,6 @@ export const rerenderEntireTree = () => {
     );
 }
 
-rerenderEntireTree()
+rerenderEntireTree(Store);
 
-store.subscribe(rerenderEntireTree)
+Store.subscribe(() => rerenderEntireTree(Store))

@@ -1,12 +1,15 @@
 import React from "react";
 import classes from "./MyPosts.module.css";
 import {Post} from "./Post/Post";
-import {PostType} from "../../../redux/state";
-import {addPostAC, updateNewPostTextAC} from "../../../redux/profile-reducer";
+import {GeneralActionType, PostType} from "../../../redux/store";
+import {
+    addPostAC,
+    updateNewPostTextAC,
+} from "../../../redux/profile-reducer";
 
 type MyPostsPropsType = {
     post: Array<PostType>
-    dispatch: (action: any) => void
+    dispatch: (action: GeneralActionType) => void
     newPostText: string
 }
 
@@ -25,7 +28,7 @@ export function MyPosts(props: MyPostsPropsType) {
     }
     
     const onPostChange = () => {
-        if(newPostElement.current && newPostElement.current.value !== '') {
+        if(newPostElement.current) {
             props.dispatch(updateNewPostTextAC(newPostElement.current.value))
         }
     }

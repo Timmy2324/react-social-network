@@ -1,6 +1,21 @@
-import {DialogsPageType, GeneralActionType, MessagesType} from "./state";
+import {DialogsPageType, GeneralActionType, MessagesType} from "./store";
 
-export const DialogsReducer = (state: DialogsPageType, action: GeneralActionType) => {
+const initialState: DialogsPageType = {
+    dialogs: [
+        {id: 1, name: 'Tim'},
+        {id: 2, name: 'Nastya'},
+        {id: 3, name: 'Gena'},
+        {id: 4, name: 'Cheburashka'},
+    ],
+    messages: [
+        {id: 1, message: 'Hi'},
+        {id: 2, message: 'Hello'},
+        {id: 3, message: 'Hey'},
+    ],
+    newMessage: '',
+}
+
+export const DialogsReducer = (state: DialogsPageType = initialState, action: GeneralActionType) => {
 
     switch (action.type) {
         case 'ADD-MESSAGES': {
