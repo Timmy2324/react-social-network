@@ -1,23 +1,20 @@
 import mainScreen from "../../img/mainScreen.png";
 import React from "react";
 import classes from "./Profile.module.css";
-import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import {GeneralActionType, ProfilePageType} from "../../redux/store";
+import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
+import {ReduxStoreType} from "../../redux/redux-store";
 
 type ProfilePropsType = {
-    state: ProfilePageType
-    dispatch: (action: GeneralActionType) => void
+    store: ReduxStoreType
 }
 
 export function Profile(props: ProfilePropsType) {
     return (
         <div>
             <ProfileInfo/>
-            <MyPosts
-                post={props.state.posts}
-                dispatch={props.dispatch}
-                newPostText={props.state.newPostText}
+            <MyPostsContainer
+                store={props.store}
             />
         </div>
     );

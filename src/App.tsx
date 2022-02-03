@@ -3,12 +3,12 @@ import "./App.css";
 import {Header} from "./components/Header/Header";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Profile} from "./components/Profile/Profile";
-import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route, Routes} from "react-router-dom";
 import {News} from "./components/News/News";
 import {Music} from "./components/Music/Music";
 import {Settings} from "./components/Settings/Settings";
 import {ReduxStoreType} from "./redux/redux-store";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
     store: ReduxStoreType,
@@ -16,8 +16,6 @@ type AppPropsType = {
 }
 
 function App(props: AppPropsType) {
-
-    const state = props.store.getState();
 
     return (
         <div className="app-wrapper">
@@ -27,14 +25,12 @@ function App(props: AppPropsType) {
                 <Routes>
                     <Route path="/profile" element={
                         <Profile
-                            state={state.ProfileReducer}
-                            dispatch={props.dispatch}
+                            store={props.store}
                         />}
                     />
                     <Route path="/dialogs/*" element={
-                        <Dialogs
-                            state={state.DialogsReducer}
-                            dispatch={props.dispatch}
+                        <DialogsContainer
+                            store={props.store}
                         />}
                     />
                     <Route path="/news" element={<News/>}/>

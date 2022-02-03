@@ -3,27 +3,25 @@ import classes from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem'
 import {Message} from "./Message/Message";
 import {DialogsPageType} from "../../redux/store";
-import {addMessagesAC, updateNewDialogsMessagesAC} from "../../redux/dialogs-reducer";
-
-
 
 type DialogsPropsType = {
+    addMessage: () => void
+    newMessageChange: (text: string) => void
     state: DialogsPageType
-    dispatch: (action: any) => void
+    newMessage: string
 }
 
 export function Dialogs(props: DialogsPropsType) {
 
     const addMessage = () => {
-        console.log(props.state.newMessage)
-        if(props.state.newMessage !== '') {
-            props.dispatch(addMessagesAC());
+        if(props.newMessage !== '') {
+            props.addMessage();
         }
     };
 
     const newMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         if(e.currentTarget) {
-            props.dispatch(updateNewDialogsMessagesAC(e.currentTarget.value))
+            props.newMessageChange(e.currentTarget.value);
         }
     }
 
@@ -42,7 +40,7 @@ export function Dialogs(props: DialogsPropsType) {
                 {messageElements}
                 <div>
                     <div>
-                        <textarea onChange={(e) => newMessageChange(e)} value={props.state.newMessage}/>
+                        <textarea onChange={(e) => newMessageChange(e)} value={props.newMessage}/>
                     </div>
                     <div>
                         <button onClick={addMessage}>Add message</button>
