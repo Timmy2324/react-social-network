@@ -10,7 +10,6 @@ import {Settings} from "./components/Settings/Settings";
 import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 type AppPropsType = {
-    dispatch: (action: any) => void
 }
 
 function App(props: AppPropsType) {

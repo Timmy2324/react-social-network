@@ -47,8 +47,7 @@ export type StoreType = {
 
 export type GeneralActionType = AddPostActionType | UpdateNewPostTextActionType | AddMessagesActionType | UpdateNewDialogsMessagesActionType;
 
-
-export let store: StoreType = {
+let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -110,9 +109,8 @@ export let store: StoreType = {
         return this._state;
     },
     dispatch(action) {
-        debugger
-        this._state.profilePage = ProfileReducer(this._state.profilePage, action);
-        this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action);
+        // this._state.profilePage = ProfileReducer(this._state.profilePage, action);
+        // this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action);
         this._onChange();
     }
 }
