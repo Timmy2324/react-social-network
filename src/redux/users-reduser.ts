@@ -1,15 +1,19 @@
-import avatar from "../img/avatar.jpg";
 
 type LocationType = {
     city: string
     country: string
 }
 
+type PhotoType = {
+    small: string
+    large: string
+}
+
 export type UserType = {
     id: number
-    photo: string
-    isFollow: boolean
-    fullName: string
+    photos: PhotoType
+    followed: boolean
+    name: string
     status: string
     location: LocationType
 }
@@ -19,30 +23,7 @@ export type UsersPageType = {
 }
 
 const initialState: UsersPageType = {
-    users: [
-        {
-            id: 1,
-            photo: avatar,
-            isFollow: false,
-            fullName: 'Tim',
-            status: 'Ky',
-            location: {
-                city: 'Astrakhan',
-                country: 'Russia',
-            },
-        },
-        {
-            id: 2,
-            photo: avatar,
-            isFollow: true,
-            fullName: 'Nastya',
-            status: 'hello',
-            location: {
-                city: 'Astrakhan',
-                country: 'Russia',
-            },
-        },
-    ]
+    users: []
 }
 
 export const UsersReducer = (state: UsersPageType = initialState, action: ActionType) => {
@@ -51,7 +32,7 @@ export const UsersReducer = (state: UsersPageType = initialState, action: Action
         case 'FOLLOW-TOGGLE':
             return {
                 ...state,
-                users: state.users.map(user => user.id === action.userID ? {...user, isFollow: !user.isFollow} : user)
+                users: state.users.map(user => user.id === action.userID ? {...user, followed: !user.followed} : user)
             }
         case 'SET-USERS':
             return {...state, users: [...state.users, ...action.users]}

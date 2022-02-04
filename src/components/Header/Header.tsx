@@ -1,4 +1,4 @@
-import logo from "../../img/logo.png";
+import logo from "../../assets/img/logo.png";
 import React from "react";
 import classes from "./Header.module.css"
 

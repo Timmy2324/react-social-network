@@ -1,4 +1,4 @@
-import mainScreen from "../../../img/mainScreen.png";
+import mainScreen from "../../../assets/img/mainScreen.png";
 import React from "react";
 import classes from "./ProfileInfo.module.css";
 

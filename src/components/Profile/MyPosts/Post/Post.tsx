@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Post.module.css";
-import avatar from "../../../../img/avatar.jpg";
+import avatar from "../../../../assets/img/avatar.jpg";
 
 type PostPropsTypes = {
     message: string,
