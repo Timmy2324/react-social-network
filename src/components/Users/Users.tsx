@@ -1,20 +1,40 @@
 import React from 'react';
 import classes from './Users.module.css';
-import {UsersPropsType} from "./UsersContainer";
-import axios from "axios";
 import avatar from "../../assets/img/avatar.jpg";
+import {UserType} from "../../redux/users-reduser";
+
+type UsersPropsType = {
+    users: Array<UserType>,
+    totalUsersCount: number,
+    pageSize: number,
+    currentPage: number,
+    onPageChanged: (pageNumber: number) =>void,
+    followToggle: (userID: number) => void
+}
 
 export const Users = (props: UsersPropsType) => {
 
-    if(props.users.length === 0) {
+    const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            props.setUsers(response.data.items);
-        });
+    const pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i)
     }
+
 
     return (
         <div>
+            <div>
+                {pages.map((page, index) => {
+                    return (<span
+                        key={index}
+                        className={props.currentPage === page ? classes.selectPage : ''}
+                        onClick={() => props.onPageChanged(page)}
+                    >
+                            {page }
+                        </span>)
+                })}
+            </div>
             {
                 props.users.map(user => <div key={user.id}>
                     <span>
