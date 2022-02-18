@@ -6,7 +6,7 @@ import avatar from "../../assets/img/avatar.jpg";
 
 export const Users = (props: UsersPropsType) => {
 
-    if(props.state.users.length === 0) {
+    if(props.users.length === 0) {
 
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
             props.setUsers(response.data.items);
@@ -16,7 +16,7 @@ export const Users = (props: UsersPropsType) => {
     return (
         <div>
             {
-                props.state.users.map(user => <div key={user.id}>
+                props.users.map(user => <div key={user.id}>
                     <span>
                         <div>
                             <img className={classes.photo} src={user.photos.small !== null ? user.photos.small : avatar} alt=""/>
