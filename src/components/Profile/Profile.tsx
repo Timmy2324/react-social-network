@@ -1,14 +1,13 @@
 import React from "react";
-import classes from "./Profile.module.css";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-type ProfilePropsType = {
-}
+import {ProfilePropsType} from "./ProfileContainer";
+
 
 export function Profile(props: ProfilePropsType) {
     return (
         <div>
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     );
