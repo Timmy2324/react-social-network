@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Users.module.css';
 import avatar from "../../assets/img/avatar.jpg";
 import {UserType} from "../../redux/users-reduser";
+import {NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     users: Array<UserType>,
@@ -39,7 +40,9 @@ export const Users = (props: UsersPropsType) => {
                 props.users.map(user => <div key={user.id}>
                     <span>
                         <div>
-                            <img className={classes.photo} src={user.photos.small !== null ? user.photos.small : avatar} alt=""/>
+                            <NavLink to={'/profile/' + user.id}>
+                                <img className={classes.photo} src={user.photos.small !== null ? user.photos.small : avatar} alt=""/>
+                            </NavLink>
                         </div>
                         <div>
                             <button onClick={() => props.followToggle(user.id)}>{user.followed ? 'UnFollow' : 'Follow'}</button>

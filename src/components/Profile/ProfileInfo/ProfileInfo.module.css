@@ -1,5 +1,9 @@
-.description_block {
+.wrapper {
     padding: 10px;
+}
+
+.link {
+    color: white;
 }
 
 .mainScreen {
