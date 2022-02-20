@@ -21,9 +21,11 @@ function App(props: AppPropsType) {
             <Navbar/>
             <div className="app-wrapper-content">
                 <Routes>
-                    <Route path="/profile/*" element={
+                    <Route path="/profile" element={
                         <ProfileContainer/>}
-                    />
+                    >
+                        <Route path=":userId" element={<ProfileContainer />} />
+                    </Route>
                     <Route path="/dialogs/*" element={
                         <DialogsContainer/>}
                     />
