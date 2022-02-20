@@ -20,10 +20,10 @@ export function Dialogs(props: DialogsPropsType) {
     }
 
     let dialogsElements = props.dialogsPage.dialogs
-        .map((d) => <DialogItem name={d.name} id={d.id}/>);
+        .map((d, index) => <DialogItem key={index} name={d.name} id={d.id}/>);
 
     let messageElements = props.dialogsPage.messages
-        .map((m) => <Message message={m.message}/>);
+        .map((m, index) => <Message key={index} message={m.message}/>);
 
     return (
         <div className={classes.dialogs}>
