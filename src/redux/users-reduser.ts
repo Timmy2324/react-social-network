@@ -37,10 +37,15 @@ const initialState: UsersPageType = {
 export const UsersReducer = (state: UsersPageType = initialState, action: ActionType) => {
 
     switch (action.type) {
-        case 'FOLLOW-TOGGLE':
+        case 'FOLLOW':
             return {
                 ...state,
-                users: state.users.map(user => user.id === action.userID ? {...user, followed: !user.followed} : user)
+                users: state.users.map(user => user.id === action.userID ? {...user, followed: true} : user)
+            }
+        case 'UN-FOLLOW':
+            return {
+                ...state,
+                users: state.users.map(user => user.id === action.userID ? {...user, followed: false} : user)
             }
         case 'SET-USERS':
             return {...state, users: [...action.users]}
@@ -55,12 +60,20 @@ export const UsersReducer = (state: UsersPageType = initialState, action: Action
     }
 }
 
-type ActionType = FollowToggleType | SetUsersType | SetCurrentPageType | SetTotalCountType | SetFetchingType;
+type ActionType = UnFollowType | FollowType | SetUsersType | SetCurrentPageType | SetTotalCountType | SetFetchingType;
 
-type FollowToggleType = ReturnType<typeof FollowToggleAC>
-export const FollowToggleAC = (userID: number) => {
+type UnFollowType = ReturnType<typeof UnFollowAC>
+export const UnFollowAC = (userID: number) => {
     return {
-        type: 'FOLLOW-TOGGLE',
+        type: 'UN-FOLLOW',
+        userID,
+    } as const
+}
+
+type FollowType = ReturnType<typeof FollowAC>
+export const FollowAC = (userID: number) => {
+    return {
+        type: 'FOLLOW',
         userID,
     } as const
 }
