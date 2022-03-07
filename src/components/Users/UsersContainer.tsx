@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {
-    FollowToggleAC,
+    FollowAC,
     setCurrentPageAC, setFetchingAC,
     setTotalCountAC,
-    setUsersAC,
+    setUsersAC, UnFollowAC,
     UserType
 } from "../../redux/users-reduser";
 import {AppStateType} from "../../redux/redux-store";
@@ -23,7 +23,8 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    followToggle: (userID: number) => void
+    UnFollow: (userID: number) => void
+    Follow: (userID: number) => void
     setUsers: (users: Array<UserType>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalCount: (totalCount: number) => void
@@ -35,7 +36,9 @@ export type UsersPropsType = MapStatePropsType & MapDispatchPropsType;
 class UsersContainerComponent extends React.Component<UsersPropsType, AppStateType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`, {
+            withCredentials: true,
+        }).then(response => {
             this.props.setUsers(response.data.items);
             this.props.setTotalCount(response.data.totalCount);
             this.props.setFetching(false);
@@ -63,7 +66,9 @@ class UsersContainerComponent extends React.Component<UsersPropsType, AppStateTy
                         users={this.props.users}
                         currentPage={this.props.currentPage}
                         pageSize={this.props.pageSize}
-                        followToggle={this.props.followToggle}
+                        follow={this.props.Follow}
+                        unFollow={this.props.UnFollow}
+                        setFetching={this.props.setFetching}
                     />
                 }
 
@@ -84,7 +89,8 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
   return {
-      followToggle: (userID) => dispatch(FollowToggleAC(userID)),
+      UnFollow: (userID) => dispatch(UnFollowAC(userID)),
+      Follow: (userID) => dispatch(FollowAC(userID)),
       setUsers: (users) => dispatch(setUsersAC(users)),
       setCurrentPage: (currentPage) => dispatch(setCurrentPageAC(currentPage)),
       setTotalCount: (totalCount) => dispatch(setTotalCountAC(totalCount)),
