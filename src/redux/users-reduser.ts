@@ -24,6 +24,7 @@ export type UsersPageType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 
 const initialState: UsersPageType = {
@@ -32,6 +33,7 @@ const initialState: UsersPageType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
+    followingInProgress: [],
 }
 
 export const UsersReducer = (state: UsersPageType = initialState, action: ActionType) => {
@@ -53,14 +55,18 @@ export const UsersReducer = (state: UsersPageType = initialState, action: Action
             return {...state, currentPage: action.currentPage}
         case 'SET-TOTAL-COUNT':
             return {...state, totalUsersCount: action.totalCount}
-        case "SET-FETCHING":
+        case 'SET-FETCHING':
             return {...state, isFetching: action.isFetching}
+        case 'TOGGLE-FOLLOWING-IN-PROGRESS':
+            return {...state, followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userID]
+                    : state.followingInProgress.filter(id => id !== action.userID)}
         default:
             return state;
     }
 }
 
-type ActionType = UnFollowType | FollowType | SetUsersType | SetCurrentPageType | SetTotalCountType | SetFetchingType;
+type ActionType = UnFollowType | FollowType | SetUsersType | SetCurrentPageType | SetTotalCountType | SetFetchingType | ToggleFollowingInProgress;
 
 type UnFollowType = ReturnType<typeof UnFollowAC>
 export const UnFollowAC = (userID: number) => {
@@ -106,6 +112,15 @@ type SetFetchingType = ReturnType<typeof setFetchingAC>
 export const setFetchingAC = (isFetching: boolean) => {
     return {
         type: 'SET-FETCHING',
+        isFetching,
+    } as const
+}
+
+type ToggleFollowingInProgress = ReturnType<typeof toggleFollowingInProgressAC>
+export const toggleFollowingInProgressAC = (userID: number, isFetching: boolean) => {
+    return {
+        type: 'TOGGLE-FOLLOWING-IN-PROGRESS',
+        userID,
         isFetching,
     } as const
 }
