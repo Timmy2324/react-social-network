@@ -4,7 +4,7 @@ import {
     FollowAC,
     setCurrentPageAC, setFetchingAC,
     setTotalCountAC,
-    setUsersAC, UnFollowAC,
+    setUsersAC, toggleFollowingInProgressAC, UnFollowAC,
     UserType
 } from "../../redux/users-reduser";
 import {AppStateType} from "../../redux/redux-store";
@@ -20,6 +20,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<number>
 }
 
 type MapDispatchPropsType = {
@@ -29,6 +30,7 @@ type MapDispatchPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalCount: (totalCount: number) => void
     setFetching: (isFetching: boolean) => void
+    toggleFollowingInProgress: (userID: number, toggle: boolean) => void
 }
 
 export type UsersPropsType = MapStatePropsType & MapDispatchPropsType;
@@ -69,6 +71,8 @@ class UsersContainerComponent extends React.Component<UsersPropsType, AppStateTy
                         follow={this.props.Follow}
                         unFollow={this.props.UnFollow}
                         setFetching={this.props.setFetching}
+                        followingInProgress={this.props.followingInProgress}
+                        toggleFollowingInProgress={this.props.toggleFollowingInProgress}
                     />
                 }
 
@@ -84,6 +88,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: state.UsersReducer.totalUsersCount,
         currentPage: state.UsersReducer.currentPage,
         isFetching: state.UsersReducer.isFetching,
+        followingInProgress: state.UsersReducer.followingInProgress,
     }
 }
 
@@ -95,6 +100,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         setCurrentPage: (currentPage) => dispatch(setCurrentPageAC(currentPage)),
         setTotalCount: (totalCount) => dispatch(setTotalCountAC(totalCount)),
         setFetching: (isFetching) => dispatch(setFetchingAC(isFetching)),
+        toggleFollowingInProgress: (userID, toggle) => dispatch(toggleFollowingInProgressAC(userID, toggle))
     }
 }
 
