@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Header} from "./Header";
-import axios from "axios";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {AuthType, setUserDataAC} from "../../redux/auth-reducer";
+import {auth} from "../../api/api";
 
 type MapStatePropsType = {
     id: number | null,
@@ -22,13 +22,10 @@ export type HeaderPropsType = MapStatePropsType & MapDispatchPropsType;
 class HeaderContainerComponent extends Component<HeaderPropsType, AppStateType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true,
-        })
-            .then((response) => {
-                if (response.data.resultCode === 0) {
-                    console.log(response.data.data)
-                    this.props.setUserData(response.data.data);
+        auth()
+            .then((data) => {
+                if (data.data.resultCode === 0) {
+                    this.props.setUserData(data.data);
                 }
             })
     }

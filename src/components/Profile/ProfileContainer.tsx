@@ -3,9 +3,9 @@ import {setUserProfileAC, UserProfileType} from "../../redux/profile-reducer";
 import {Dispatch} from "redux";
 import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
-import axios from "axios";
 import {Profile} from "./Profile";
 import {useParams} from "react-router-dom";
+import {getUserProfile} from "../../api/api";
 
 type WrappedComponentPropsType = {
     params?: {
@@ -40,9 +40,9 @@ class ProfileContainerComponent extends React.Component<ProfilePropsType, AppSta
         if (!userId){
             userId = '2';
         }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(response => {
-                this.props.setUserProfile(response.data);
+        getUserProfile(userId)
+            .then(data => {
+                this.props.setUserProfile(data);
             });
     }
 
