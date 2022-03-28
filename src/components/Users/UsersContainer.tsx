@@ -21,6 +21,7 @@ type MapStatePropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<number>
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -67,6 +68,7 @@ class UsersContainerComponent extends React.Component<UsersPropsType, AppStateTy
                         unFollow={this.props.unFollow}
                         setFetching={this.props.setFetching}
                         followingInProgress={this.props.followingInProgress}
+                        isAuth={this.props.isAuth}
                     />
                 }
 
@@ -83,6 +85,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: state.UsersReducer.currentPage,
         isFetching: state.UsersReducer.isFetching,
         followingInProgress: state.UsersReducer.followingInProgress,
+        isAuth: state.AuthReducer.isAuth,
     }
 }
 

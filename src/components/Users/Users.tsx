@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Users.module.css';
 import avatar from "../../assets/img/avatar.jpg";
 import {UserType} from "../../redux/users-reduser";
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 
 type UsersPropsType = {
     users: Array<UserType>,
@@ -14,9 +14,15 @@ type UsersPropsType = {
     unFollow: (userID: number) => void,
     setFetching: (isFetching: boolean) => void,
     followingInProgress: Array<number>,
+    isAuth: boolean,
 }
 
 export const Users = (props: UsersPropsType) => {
+
+    if (!props.isAuth) {
+        console.log(props.isAuth)
+        return <Navigate to={'/login'}/>
+    }
 
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 

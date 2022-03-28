@@ -23,6 +23,7 @@ const withRouter = (WrappedComponent: any) => (props: any) => {
 
 type MapStatePropsType = {
     profile: UserProfileType | null,
+    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -53,6 +54,7 @@ class ProfileContainerComponent extends React.Component<ProfilePropsType, AppSta
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         profile: state.ProfileReducer.profile,
+        isAuth: state.AuthReducer.isAuth,
     }
 }
 
