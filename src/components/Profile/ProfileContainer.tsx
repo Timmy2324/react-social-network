@@ -1,11 +1,9 @@
 import React from 'react';
-import {setUserProfileAC, UserProfileType} from "../../redux/profile-reducer";
-import {Dispatch} from "redux";
+import {getUserProfile, setUserProfile, UserProfileType} from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
 import {useParams} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 type WrappedComponentPropsType = {
     params?: {
@@ -29,6 +27,7 @@ type MapStatePropsType = {
 
 type MapDispatchPropsType = {
     setUserProfile: (profile: UserProfileType) => void,
+    getUserProfile: (userID: string) => void,
 }
 
 export type ProfilePropsType = MapStatePropsType & MapDispatchPropsType & WrappedComponentPropsType;
@@ -40,10 +39,7 @@ class ProfileContainerComponent extends React.Component<ProfilePropsType, AppSta
         if (!userId){
             userId = '2';
         }
-        usersAPI.getUserProfile(userId)
-            .then(data => {
-                this.props.setUserProfile(data);
-            });
+        this.props.getUserProfile(userId);
     }
 
 
@@ -60,12 +56,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        setUserProfile: (profile: UserProfileType) => dispatch(setUserProfileAC(profile)),
-    }
-}
-
 let WithUrlDataContainerComponent = withRouter(ProfileContainerComponent);
 
-export const ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(WithUrlDataContainerComponent);
+export const ProfileContainer = connect(mapStateToProps, {setUserProfile, getUserProfile})(WithUrlDataContainerComponent);
