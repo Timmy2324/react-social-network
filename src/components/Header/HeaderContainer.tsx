@@ -24,7 +24,7 @@ class HeaderContainerComponent extends Component<HeaderPropsType, AppStateType> 
     componentDidMount() {
         auth()
             .then((data) => {
-                if (data.data.resultCode === 0) {
+                if (data.resultCode === 0) {
                     this.props.setUserData(data.data);
                 }
             })

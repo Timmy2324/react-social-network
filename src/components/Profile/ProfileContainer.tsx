@@ -5,7 +5,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {Profile} from "./Profile";
 import {useParams} from "react-router-dom";
-import {getUserProfile} from "../../api/api";
+import {usersAPI} from "../../api/api";
 
 type WrappedComponentPropsType = {
     params?: {
@@ -40,7 +40,7 @@ class ProfileContainerComponent extends React.Component<ProfilePropsType, AppSta
         if (!userId){
             userId = '2';
         }
-        getUserProfile(userId)
+        usersAPI.getUserProfile(userId)
             .then(data => {
                 this.props.setUserProfile(data);
             });
