@@ -12,6 +12,7 @@ import {AppStateType} from "../../redux/redux-store";
 import {Users} from "./Users";
 import {Preloader} from "../Preloader/Preloader";
 import {usersAPI} from "../../api/api";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 type MapStatePropsType = {
@@ -21,7 +22,6 @@ type MapStatePropsType = {
     currentPage: number
     isFetching: boolean
     followingInProgress: Array<number>
-    isAuth: boolean
 }
 
 type MapDispatchPropsType = {
@@ -68,7 +68,6 @@ class UsersContainerComponent extends React.Component<UsersPropsType, AppStateTy
                         unFollow={this.props.unFollow}
                         setFetching={this.props.setFetching}
                         followingInProgress={this.props.followingInProgress}
-                        isAuth={this.props.isAuth}
                     />
                 }
 
@@ -85,11 +84,10 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: state.UsersReducer.currentPage,
         isFetching: state.UsersReducer.isFetching,
         followingInProgress: state.UsersReducer.followingInProgress,
-        isAuth: state.AuthReducer.isAuth,
     }
 }
 
-export const UsersContainer = connect(mapStateToProps, {
+export const UsersContainer = withAuthRedirect(connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     setTotalCount,
@@ -97,4 +95,4 @@ export const UsersContainer = connect(mapStateToProps, {
     getUsers,
     follow,
     unFollow,
-})(UsersContainerComponent);
+})(UsersContainerComponent));
